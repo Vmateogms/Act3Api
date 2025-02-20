@@ -1,0 +1,29 @@
+
+<section class="container mt-3">
+    <h6>{{ isUpdate ? 'Editar Usuario' : 'Nuevo Usuario' }}</h6>
+    <hr>
+    <form [formGroup]="registrarUsuarios" (ngSubmit)="getDataForm()">
+        <div class="mb-3">
+            <label for="first_name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="first_name" formControlName="first_name">
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="last_name" formControlName="last_name">
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" formControlName="username">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Imagen (opcional)</label>
+            <input type="text" class="form-control" id="image" formControlName="image">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="registrarUsuarios.invalid"> {{ isUpdate ? 'Actualizar' : 'Guardar' }} </button>
+    </form>
+
+</section>

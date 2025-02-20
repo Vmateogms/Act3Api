@@ -1,0 +1,23 @@
+<div class="container my-5">
+
+  <button class="btn btn-danger mb-3 col-md-4" (click)="ruta.navigate(['/newuser'])">
+    Crear usuario
+  </button>
+  
+  <div class="row justify-content-center">
+    @for (user of users; track user.id) {
+      <div class="col-md-3 mb-4">
+        <app-user-card 
+          [user]="user"
+          (verDetalleOut)="verDetalle($event)"
+          (actualizarOut)="actualizar($event)"
+          (borrarUsuarioOut)="borrarUsuario($event)">
+        </app-user-card>
+      </div>
+    } @empty {
+      <div class="col-md-12 text-center">
+        <p class="text-muted">No hay usuarios disponibles.</p>
+      </div>
+    }
+  </div>
+</div>
