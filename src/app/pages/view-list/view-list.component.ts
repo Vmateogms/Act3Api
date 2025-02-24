@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { UserCardComponent } from '../user-card/user-card.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-view-list',
   standalone: true,
-  imports: [UserCardComponent],
+  imports: [UserCardComponent, NgxPaginationModule],
   templateUrl: './view-list.component.html',
   styleUrl: './view-list.component.css'
 })
@@ -17,18 +18,20 @@ export class ViewListComponent implements OnInit {
 ruta = inject(Router);
 userService = inject (UserService);
 users: IUser[] = [];
+p: number = 1;
+itemsPerPage: number = 6;
+totalItems: number = 0;
 
 
 ngOnInit(): void {
   this.cargarUsuarios();
 }
 
-
-cargarUsuarios(): void {
-  this.userService.getAll().subscribe({
-    next: (users) => {
-      console.log('Usuarios recibidos:', users);
-      this.users = users;
+cargarUsuarios(page: number = 1): void {
+  this.userService.getAll(page, this.itemsPerPage).subscribe({
+    next: (response) => {
+      this.users = response.data;
+      this.totalItems = response.total;
     },
     error: (error) => {
       console.error('Error cargando usuarios:', error);
@@ -37,13 +40,17 @@ cargarUsuarios(): void {
   });
 }
 
-// cargarUsuarios(): void{
+
+// cargarUsuarios(page: number = 1): void {
 //   this.userService.getAll().subscribe({
-//     next: (data) => {
-//       console.log('Usuarios cargados:', data); 
-//       this.users = data;
+//     next: (users) => {
+//       console.log('Usuarios recibidos:', users);
+//       this.users = users;
 //     },
-//     error: (error) => console.error('Error cargando users', error),
+//     error: (error) => {
+//       console.error('Error cargando usuarios:', error);
+//       alert('Error al cargar usuarios. Ver consola para detalles.');
+//     }
 //   });
 // }
 

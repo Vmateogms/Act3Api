@@ -17,7 +17,7 @@ registrarUsuarios: FormGroup;
 UserService = inject(UserService);
 ruta = inject(Router);
 isUpdate: boolean = false;
-rutaActiva = inject(ActivatedRoute); 
+
 
 constructor(private route: ActivatedRoute) {
 
@@ -29,33 +29,21 @@ constructor(private route: ActivatedRoute) {
     email: new FormControl('', [Validators.required, Validators.email]),
     image: new FormControl('', )
   });
-
-
-  this.route.params.subscribe(params => {
-    if (params['id']) {
-      this.isUpdate = true;
-      this.UserService.getById(params['id']).subscribe(user => {
-        this.registrarUsuarios.patchValue(user);
-      });
-    }
-  });
 }
-
-
-
 
 
 ngOnInit(): void {
   this.registrarUsuarios.reset();
   
-  this.rutaActiva.params.subscribe(params => {
+  this.route.params.subscribe((params) => {
     const userId = params['id'];
     if (userId) {
       this.isUpdate = true;
-      this.UserService.getById(userId).subscribe({
+      this.UserService.getById(+userId).subscribe({
         next: (user) => {
-          console.log('Usuario a editar:', user);
+          if(user) {
           this.registrarUsuarios.patchValue(user);
+          }
         },
         error: (error) => {
           console.error('Error cargando usuario', error);

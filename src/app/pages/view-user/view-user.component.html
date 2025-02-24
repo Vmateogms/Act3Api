@@ -1,1 +1,24 @@
-<p>view-user works!</p>
+<div class="container my-5">
+    <h2>Detalles del Usuario</h2>
+    <hr />
+  
+ 
+    @if (user) {
+    <div>
+        <p><strong>Nombre:</strong> {{ user.first_name }}</p>
+        <p><strong>Apellido:</strong> {{ user.last_name }}</p>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Imagen:</strong> <img [src]="user.image" alt="Imagen del usuario" width="100" /></p>
+  
+     
+    <div class="mt-4">
+        <button class="btn btn-secondary me-2" (click)="volverAlaLista()">Volver al Listado</button>
+        <button class="btn btn-primary me-2" (click)="editarUser()">Editar Usuario</button>
+        <button class="btn btn-danger" (click)="eliminarUser()">Eliminar Usuario</button>
+        </div>
+    </div>
+    } @else {
+    <p class="text-muted">No se encontraron detalles del usuario.</p>
+    }
+  </div>
